@@ -2,10 +2,20 @@
  * @Author: renpengfei
  * @Date: 2018-06-21 15:27:54
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-06-21 15:27:54
+ * @Last Modified time: 2018-06-22 15:22:38
  */
 module.exports = {
     extends: 'react-app',
+    env: {
+        // 浏览器的全局变量
+        browser: true,
+        // Node.js 全局变量和 Node.js 作用域
+        node: true,
+        // 支持除模块外所有 ECMAScript 6 特性（该选项会自动设置 ecmaVersion 解析器选项为 6
+        es6: true
+    },
+    // EsLint默认使用esprima做脚本解析，当然你也切换他，比如切换成babel-eslint解析
+    parser: 'babel-eslint',
     globals: {
         // 这里填入你的项目需要的全局变量 这里值为 false 表示这个全局变量不允许被重新赋值，比如：
         //
@@ -28,9 +38,7 @@ module.exports = {
         "no-multi-spaces": 2,
         // 禁止多次声明同一变量
         "no-redeclare": 2,
-        // 禁止使用不带 await 表达式的 async 函数
-        // "require-await": 2,
-        // 强制数组方括号中使用一致的空格
+        // 禁止使用不带 await 表达式的 async 函数 "require-await": 2, 强制数组方括号中使用一致的空格
         "array-bracket-spacing": [
             2, "never"
         ],
