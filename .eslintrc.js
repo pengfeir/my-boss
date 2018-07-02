@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-06-21 15:27:54
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-06-22 15:22:38
+ * @Last Modified time: 2018-07-02 16:30:31
  */
 module.exports = {
     extends: 'react-app',
@@ -80,6 +80,8 @@ module.exports = {
         // 禁用 console
         "no-console": 1,
         // 禁用 debugger
-        "no-debugger": 1
+        "no-debugger": 1,
+        // "always" 要求花括号内有空格 (除了 {})
+        "object-curly-spacing": ["error", "always"]
     }
 }
