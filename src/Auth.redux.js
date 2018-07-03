@@ -1,14 +1,8 @@
 /*
- * @Author: renpengfei 
- * @Date: 2018-07-02 18:35:22 
- * @Last Modified by: renpengfei 
- * @Last Modified time: 2018-07-02 18:35:22 
- */
-/*
  * @Author: renpengfei
  * @Date: 2018-07-02 16:51:10
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-02 18:27:54
+ * @Last Modified time: 2018-07-03 10:05:04
  */
 const LOGIN = 'LOGIN'
 const LOGOUT = 'LOGOUT'
