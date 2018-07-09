@@ -2,12 +2,15 @@
  * @Author: renpengfei
  * @Date: 2018-07-03 15:09:17
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-04 09:55:15
+ * @Last Modified time: 2018-07-09 18:57:56
  */
 import React from 'react'
 import Logo from '../../Component/logo/logo'
 import { List, InputItem, WhiteSpace, Button, Radio } from 'antd-mobile'
+import { connect } from 'react-redux'
+import { register } from '../../redux/user.redux'
 
+@connect(state => state.user, { register })
 class Register extends React.Component {
     constructor(props) {
         super(props)
@@ -17,23 +20,18 @@ class Register extends React.Component {
             repeadpwd: '',
             type: 0
         }
-        // this.register = this.register.bind(this)
-    }
-    register() {
-        this
-            .props
-            .history
-            .push('/login')
     }
     handleChange = (key, val) => {
-        this.setState({ [key]: val })
+        this.setState({ [key]: val },() => {
+            this
+            .props
+            .register(this.state)
+        })
+        
     }
     onChange = (value) => {
-        console.log('checkbox')
-        this.setState({
-            type: value
-        })
-      };
+        this.setState({ type: value })
+    };
     render() {
         const RadioItem = Radio.RadioItem
         const data = [
@@ -65,7 +63,7 @@ class Register extends React.Component {
                             {i.label}
                         </RadioItem>
                     ))}
-                    <Button type="primary" onClick={this.register}>注册</Button>
+                    <Button type="primary" onClick={this.props.register}>注册</Button>
                 </List>
             </div>
         )
