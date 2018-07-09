@@ -5,6 +5,7 @@
   "dependencies": {
     "antd-mobile": "^2.2.0",
     "autoprefixer": "7.1.6",
+    "axios": "^0.18.0",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
@@ -31,6 +32,7 @@
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
     "koa": "^2.5.1",
+    "koa-router": "^7.4.0",
     "mongoose": "^5.1.6",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
@@ -105,7 +107,9 @@
           "style": "css"
         }
       ],
-      ["transform-decorators-legacy"]
+      [
+        "transform-decorators-legacy"
+      ]
     ]
   },
   "eslintConfig": {
@@ -119,5 +123,6 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "proxy": "http://localhost:8888"
 }
