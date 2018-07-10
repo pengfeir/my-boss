@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-03 15:09:17
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-09 15:49:51
+ * @Last Modified time: 2018-07-10 17:41:06
  */
 import React from 'react'
 import Logo from '../../Component/logo/logo'
@@ -41,9 +41,9 @@ class Login extends React.Component {
                 <Logo></Logo>
                 <List>
                     <WhiteSpace/>
-                    <InputItem value={this.state.user} onChange={v => this.handleChange('user', v)}>用户名</InputItem>
+                    <InputItem value={this.state.user} type="number" onChange={v => this.handleChange('user', v)}>用户名</InputItem>
                     <WhiteSpace/>
-                    <InputItem value={this.state.pwd} onChange={v => this.handleChange('pwd', v)}>密码</InputItem>
+                    <InputItem value={this.state.pwd} type="password" onChange={v => this.handleChange('pwd', v)}>密码</InputItem>
                 </List>
                 <WhiteSpace/>
                 <WingBlank>

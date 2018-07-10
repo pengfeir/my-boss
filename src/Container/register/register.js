@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-03 15:09:17
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-09 18:57:56
+ * @Last Modified time: 2018-07-10 17:48:24
  */
 import React from 'react'
 import Logo from '../../Component/logo/logo'
@@ -50,10 +50,11 @@ class Register extends React.Component {
                     <WhiteSpace/>
                     <InputItem value={this.state.user} onChange={v => this.handleChange('user', v)}>用户名</InputItem>
                     <WhiteSpace/>
-                    <InputItem value={this.state.pwd} onChange={v => this.handleChange('pwd', v)}>密码</InputItem>
+                    <InputItem value={this.state.pwd} type="password" onChange={v => this.handleChange('pwd', v)}>密码</InputItem>
                     <WhiteSpace/>
                     <InputItem
                         value={this.state.repeadpwd}
+                        type="password"
                         onChange={v => this.handleChange('repeadpwd', v)}>确认密码</InputItem>
                     <WhiteSpace/> {data.map(i => (
                         <RadioItem

@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-02 16:51:22
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-10 15:36:01
+ * @Last Modified time: 2018-07-10 17:35:00
  */
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -18,17 +18,14 @@ import Register from './Container/register/register'
 import AuthRoute from './Component/authroute/authroute'
 const store = createStore(reducers, compose(applyMiddleware(thunk), window.devToolsExtension
     ? window.devToolsExtension()
-    : f => f()))
-function hh() {
-    return <div>wqewq</div>
-}
+    : f => f))
+
 ReactDOM.render((
     <Provider store={store}>
         <BrowserRouter>
             <div>
                 <AuthRoute></AuthRoute>
                 <Route path='/login' component={Login}></Route>
-                <Route path='/boss' component={hh}></Route>
                 <Route path='/register' component={Register}></Route>
             </div>
         </BrowserRouter>
