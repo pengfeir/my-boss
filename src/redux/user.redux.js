@@ -2,9 +2,9 @@
  * @Author: renpengfei
  * @Date: 2018-07-09 17:03:47
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-09 18:43:58
+ * @Last Modified time: 2018-07-11 17:16:15
  */
-import { getUser } from '../api/login.api'
+import { create } from '../api/login.api'
 const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 const ERROR_MSG = 'ERROR_MSG'
 const initState = {
@@ -49,13 +49,16 @@ export const register = ({ user, pwd, repeadpwd, type }) => {
         return errorMsg('两次输入密码不一致！')
     } else {
         return async dispatch => {
-            let data = await getUser()
+            let params = {
+                user
+            }
+            let data = await create(params)
             console.log(1111, data)
             if (data) {
                 if (data.code === 0 && data.message === 'success') {
                     dispatch(registerSuccess({ user, pwd, repeadpwd,type }))
                 } else {
-                    dispatch(errorMsg(data.data.msg))
+                    dispatch(errorMsg(data.message))
                 }
             }
         }
