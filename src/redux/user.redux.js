@@ -2,9 +2,10 @@
  * @Author: renpengfei
  * @Date: 2018-07-09 17:03:47
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-11 17:16:15
+ * @Last Modified time: 2018-07-12 15:26:24
  */
 import { create } from '../api/login.api'
+import { getRedirectPath } from '../util/util'
 const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 const ERROR_MSG = 'ERROR_MSG'
 const initState = {
@@ -12,7 +13,6 @@ const initState = {
     msg: '',
     user: '',
     pwd: '',
-    repeadpwd: '',
     type: ''
 }
 // reducter
@@ -23,6 +23,7 @@ export const user = (state = initState, action) => {
                 ...state,
                 msg: '',
                 isAuth: true,
+                redirectTo: getRedirectPath(action.data),
                 ...action.data
             }
         case ERROR_MSG:
@@ -45,18 +46,18 @@ export const register = ({ user, pwd, repeadpwd, type }) => {
     if (!user || !pwd || !String(type)) {
         return errorMsg('用户名密码必须输入')
     } else if (pwd !== repeadpwd) {
-        console.log(2222)
         return errorMsg('两次输入密码不一致！')
     } else {
         return async dispatch => {
             let params = {
-                user
+                user,
+                pwd,
+                type
             }
             let data = await create(params)
-            console.log(1111, data)
             if (data) {
                 if (data.code === 0 && data.message === 'success') {
-                    dispatch(registerSuccess({ user, pwd, repeadpwd,type }))
+                    dispatch(registerSuccess({ user, pwd,type }))
                 } else {
                     dispatch(errorMsg(data.message))
                 }

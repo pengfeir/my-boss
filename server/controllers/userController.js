@@ -2,52 +2,47 @@
  * @Author: renpengfei
  * @Date: 2018-07-09 15:56:38
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-11 18:23:26
+ * @Last Modified time: 2018-07-12 17:33:23
  */
 const model = require('../model')
 const User = model.getModule('user')
+const md5 = require('../util/md5')
 exports.getUser = async(ctx, next) => {
-    User
-        .find({}, function (err, doc) {
-            console.log(doc)
-            ctx.body = doc
+    await User
+        .find({}, function (err, doc) {})
+        .then(data => {
+            console.log(data)
+            ctx.body = {
+                data: data
+            }
         })
-    console.log(2222)
-    // ctx.body = {     user: '鹏飞',     age: 18 }
 }
 exports.create = async(ctx, next) => {
     // 请求体
     const { user, pwd, type } = ctx.request.body
-    console.log(ctx.request.body)
-    User.findOne({
-        user
-    }, function (err, doc) {
-        if (doc) {
-            ctx.body = {
-                code: 1,
-                msg: '用户名重复'
+    try {
+        let findData = await User.findOne({ user })
+        if (findData) {
+            let errData = {
+                message: '该用户名已存在',
+                code: -1
+            }
+            return ctx.body = {
+                code: errData.code,
+                message: errData.message
+            }
+        } else {
+            let createData = await User.create({
+                user,
+                pwd: md5.md5pwd(pwd),
+                type
+            })
+            console.log('createData', createData)
+            return ctx.body = {
+                data: createData
             }
         }
-        User
-            .create({
-                user,
-                pwd,
-                type
-            }, function (err, doc) {
-                if (err) {
-                    ctx.body = {
-                        code: 2,
-                        msg: '后端出错了',
-                        test: 3333
-                    }
-                } else {
-                    ctx.body = {
-                        code: 8888,
-                        test: 2222
-                    }
-                    console.log(10000, ctx.body)
-                }
-            })
-    })
-
+    } catch (err) {
+        console.log(err)
+    }
 }
