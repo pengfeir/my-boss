@@ -2,12 +2,16 @@
  * @Author: renpengfei
  * @Date: 2018-07-03 15:09:17
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-10 17:41:06
+ * @Last Modified time: 2018-07-24 16:42:39
  */
 import React from 'react'
 import Logo from '../../Component/logo/logo'
+import { Redirect } from 'react-router-dom'
 import { List, InputItem, WhiteSpace, Button, WingBlank } from 'antd-mobile'
-import { getUser } from '../../api/login.api'
+import { connect } from 'react-redux'
+import { logining } from '../../redux/login.redux'
+
+@connect(state => state.user,{ logining })
 class Login extends React.Component {
     constructor(props) {
         super(props)
@@ -15,12 +19,14 @@ class Login extends React.Component {
             user: '',
             pwd: ''
         }
-        this.register = this
-            .register
-            .bind(this)
-        this.login = this
-            .login
-            .bind(this)
+        this.handleLogin = this.handleLogin.bind(this)
+        this.register = this.register.bind(this)
+    }
+    handleChange(key, val) {
+        this.setState({ [key]: val })
+    }
+    handleLogin() {
+        this.props.logining(this.state)
     }
     register() {
         this
@@ -28,26 +34,25 @@ class Login extends React.Component {
             .history
             .push('/register')
     }
-    async login() {
-        let data = await getUser(this.state)
-        console.log(data)
-    }
-    handleChange(key, val) {
-        this.setState({ [key]: val })
-    }
     render() {
         return (
             <div>
+                {this.props.redirectTo ? <Redirect to={this.props.redirectTo}/> : null}
                 <Logo></Logo>
                 <List>
                     <WhiteSpace/>
-                    <InputItem value={this.state.user} type="number" onChange={v => this.handleChange('user', v)}>用户名</InputItem>
+                    <InputItem
+                        value={this.state.user}
+                        onChange={v => this.handleChange('user', v)}>用户名</InputItem>
                     <WhiteSpace/>
-                    <InputItem value={this.state.pwd} type="password" onChange={v => this.handleChange('pwd', v)}>密码</InputItem>
+                    <InputItem
+                        value={this.state.pwd}
+                        type="password"
+                        onChange={v => this.handleChange('pwd', v)}>密码</InputItem>
                 </List>
                 <WhiteSpace/>
                 <WingBlank>
-                    <Button type="primary" onClick={this.login}>登陆</Button>
+                    <Button type="primary" onClick={this.handleLogin}>登陆</Button>
                     <WhiteSpace/>
                     <Button type="primary" onClick={this.register}>注册</Button>
                 </WingBlank>

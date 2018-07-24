@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-04 10:03:47
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-08 23:26:13
+ * @Last Modified time: 2018-07-24 14:51:07
  */
 import axios from 'axios'
 import { Toast } from 'antd-mobile'
@@ -16,9 +16,10 @@ service
     .use(
     // Do something before request is sent
     config => {
-        Toast.loading('Loading...', 30, () => {
+        Toast.loading('Loading...', 2, () => {
             console.log('Load complete !!!')
         })
+        console.log('config.url',config)
         return config
     },
     // Do something with request error

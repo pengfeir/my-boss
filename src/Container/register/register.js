@@ -2,16 +2,16 @@
  * @Author: renpengfei
  * @Date: 2018-07-03 15:09:17
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-12 16:36:00
+ * @Last Modified time: 2018-07-24 16:42:27
  */
 import React from 'react'
 import Logo from '../../Component/logo/logo'
 import { List, InputItem, WhiteSpace, Button, Radio } from 'antd-mobile'
 import { connect } from 'react-redux'
-// import { Redirect } from 'react-router-dom'
-import { register } from '../../redux/user.redux'
+import { Redirect } from 'react-router-dom'
+import { register } from '../../redux/register.redux'
 
-@connect(state => state.user, { register })
+@connect(state => state.newUser, { register })
 class Register extends React.Component {
     constructor(props) {
         super(props)
@@ -46,7 +46,7 @@ class Register extends React.Component {
         ]
         return (
             <div>
-                {/* {this.props.redirectTo ? <Redirect to={this.props.redirectTo}/> : null} */}
+                {this.props.redirectTo ? <Redirect to={this.props.redirectTo}/> : null}
                 <Logo></Logo>
                 <List>
                     <WhiteSpace/>
