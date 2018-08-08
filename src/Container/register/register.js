@@ -2,16 +2,16 @@
  * @Author: renpengfei
  * @Date: 2018-07-03 15:09:17
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-24 16:42:27
+ * @Last Modified time: 2018-08-07 15:06:14
  */
 import React from 'react'
 import Logo from '../../Component/logo/logo'
 import { List, InputItem, WhiteSpace, Button, Radio } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { register } from '../../redux/register.redux'
+import { register } from '../../redux/login.redux'
 
-@connect(state => state.newUser, { register })
+@connect(state => state.user, { register })
 class Register extends React.Component {
     constructor(props) {
         super(props)

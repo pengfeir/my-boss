@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-04 10:03:47
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-24 14:51:07
+ * @Last Modified time: 2018-07-27 10:53:08
  */
 import axios from 'axios'
 import { Toast } from 'antd-mobile'
@@ -34,7 +34,8 @@ service
     response => {
         Toast.hide()
         if (response.data) {
-            return Promise.resolve(response.data)
+            // return Promise.resolve(response.data)
+            return response.data
         } else {
             return Promise.reject(response)
         }

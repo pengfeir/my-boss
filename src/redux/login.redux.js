@@ -2,23 +2,23 @@
  * @Author: renpengfei 
  * @Date: 2018-07-24 10:59:15 
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-24 16:41:47
+ * @Last Modified time: 2018-08-07 22:40:05
  */
-import { login } from '../api/login.api'
+import { login,updateInfo ,create } from '../api/login.api'
 import { getRedirectPath } from '../util/util'
-const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+const AUTH_SUCCESS = 'AUTH_SUCCESS'
 const LOAD_DATA = 'LOAD_DATA'
 const ERROR_MSG = 'ERROR_MSG'
 const initState = {
-    isAuth: '',
+    redirectTo: '',
     msg: '',
     user: '',
-    pwd: '',
+    type: '',
 }
 // reducter
 export const user = (state = initState, action) => {
     switch (action.type) {
-        case LOGIN_SUCCESS:
+        case AUTH_SUCCESS:
             return {
                 ...state,
                 msg: '',
@@ -41,8 +41,21 @@ export const user = (state = initState, action) => {
             return state
     }
 }
-export const loginSuccess = (data) => {
-    return { data: data, type: LOGIN_SUCCESS }
+export const authSuccess = (data) => {
+    return { data: data, type: AUTH_SUCCESS }
+}
+export const update = (params) => {
+    console.log('reduxdata',params)
+    return async dispatch => {
+       let data = await updateInfo(params)
+       if (data) {
+        if (data.code === 0 && data.message === 'success') {
+            dispatch(authSuccess(data.data))
+        } else {
+            dispatch(errorMsg(data.message))
+        }
+       }
+    }
 }
 export const errorMsg = (msg) => {
     return { msg, type: ERROR_MSG }
@@ -60,9 +73,35 @@ export const logining = ({ user, pwd }) => {
                 pwd,
             }
             let data = await login(params)
+            console.log(data)
             if (data) {
                 if (data.code === 0 && data.message === 'success') {
-                    dispatch(loginSuccess({ user, pwd }))
+                    console.log(888888)
+                    dispatch(authSuccess({ user, pwd }))
+                } else {
+                    dispatch(errorMsg(data.message))
+                }
+            }
+        }
+
+    }
+}
+export const register = ({ user, pwd, repeadpwd, type }) => {
+    if (!user || !pwd || !String(type)) {
+        return errorMsg('用户名密码必须输入')
+    } else if (pwd !== repeadpwd) {
+        return errorMsg('两次输入密码不一致！')
+    } else {
+        return async dispatch => {
+            let params = {
+                user,
+                pwd,
+                type
+            }
+            let data = await create(params)
+            if (data) {
+                if (data.code === 0 && data.message === 'success') {
+                    dispatch(authSuccess({ user, pwd,type }))
                 } else {
                     dispatch(errorMsg(data.message))
                 }

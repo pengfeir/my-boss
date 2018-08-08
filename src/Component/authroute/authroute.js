@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-04 09:57:59
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-24 16:59:13
+ * @Last Modified time: 2018-08-07 11:50:13
  */
 import React from 'react'
 import { getInfo } from '../../api/login.api'
@@ -27,7 +27,7 @@ class AuthRoute extends React.Component {
             let data = await getInfo()
             console.log('getInfo',data)
             if (data && data.code === 0) {
-                this.props.logoData(data)
+                this.props.logoData(data.data)
             } else {
                 this.props.history.push('/login')
             }
