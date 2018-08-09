@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-08-07 10:28:51
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-07 22:37:28
+ * @Last Modified time: 2018-08-09 18:19:13
  */
 import React from 'react'
 import { Grid ,List } from 'antd-mobile'
@@ -29,6 +29,7 @@ class AvatarSelector extends React.Component {
                 <List renderHeader={() => gridHeader}>
                 <Grid data={avatarList} columnNum={5} onClick={elm => {
                     this.setState(elm)
+                    this.props.selectAvatar(elm.text)
                 }}></Grid>
                 </List>
                 

@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-08-07 10:16:38
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-08 17:40:46
+ * @Last Modified time: 2018-08-09 11:15:57
  */
 import React from 'react'
 import AvatarSelector from '../../Component/avatar-selector/avatar-selector'
@@ -17,7 +17,9 @@ class BosseInfo extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            title: ''
+            avatar: '',
+            title: '',
+            desc: '',
         }
         this.handleUpdate = this.handleUpdate.bind(this)
     }
@@ -39,7 +41,9 @@ class BosseInfo extends React.Component {
                 <NavBar mode='dark'>
                     NavBar
                 </NavBar>
-                <AvatarSelector></AvatarSelector>
+                <AvatarSelector selectAvatar={(imgname) => {
+                    this.onChange('avatar', imgname)
+                }}></AvatarSelector>
                 <InputItem onChange={v => this.onChange('title', v)}>求职岗位</InputItem>
                 <TextareaItem
                     title="个人简介"

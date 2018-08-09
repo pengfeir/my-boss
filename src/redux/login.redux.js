@@ -2,7 +2,7 @@
  * @Author: renpengfei 
  * @Date: 2018-07-24 10:59:15 
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-07 22:40:05
+ * @Last Modified time: 2018-08-09 11:33:53
  */
 import { login,updateInfo ,create } from '../api/login.api'
 import { getRedirectPath } from '../util/util'
@@ -14,6 +14,7 @@ const initState = {
     msg: '',
     user: '',
     type: '',
+    avatar: '',
 }
 // reducter
 export const user = (state = initState, action) => {
@@ -41,7 +42,8 @@ export const user = (state = initState, action) => {
             return state
     }
 }
-export const authSuccess = (data) => {
+export const authSuccess = (obj) => {
+    const { pwd,...data } = obj
     return { data: data, type: AUTH_SUCCESS }
 }
 export const update = (params) => {
@@ -77,7 +79,7 @@ export const logining = ({ user, pwd }) => {
             if (data) {
                 if (data.code === 0 && data.message === 'success') {
                     console.log(888888)
-                    dispatch(authSuccess({ user, pwd }))
+                    dispatch(authSuccess(data.data))
                 } else {
                     dispatch(errorMsg(data.message))
                 }

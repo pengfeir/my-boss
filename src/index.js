@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-02 16:51:22
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-08 17:38:48
+ * @Last Modified time: 2018-08-09 18:05:01
  */
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -21,6 +21,7 @@ import Register from './Container/register/register'
 import AuthRoute from './Component/authroute/authroute'
 import BossInfo from './Container/bossinfo/bossinfo'
 import GeniusInfo from './Container/geniusinfo/geniusinfo'
+import Dashboard from './Container/dashboard/dashboard'
 
 const store = createStore(reducers, compose(applyMiddleware(thunk), window.devToolsExtension
     ? window.devToolsExtension()
@@ -36,6 +37,9 @@ ReactDOM.render((
                     <Route path='/geniusinfo' component={GeniusInfo}></Route>
                     <Route path='/login' component={Login}></Route>
                     <Route path='/register' component={Register}></Route>
+                    <Route path='/boss' component={Dashboard}></Route>
+                    <Route path='/genius' component={Dashboard}></Route>
+                    <Route component={Dashboard}></Route>
                 </Switch>
             </div>
         </BrowserRouter>

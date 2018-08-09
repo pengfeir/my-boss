@@ -2,7 +2,7 @@
  * @Author: renpengfei 
  * @Date: 2018-06-21 17:46:09 
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-07-11 16:09:06
+ * @Last Modified time: 2018-08-09 11:30:07
  */
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost:27017/imooc-chat') //连接本地数据库
@@ -13,7 +13,7 @@ const models = {
         'pwd': { type: String,require: true },
         'type': { type: String,require: true },
         // 头像
-        'avator': { type: String },
+        'avatar': { type: String },
         // 个人简介或职位简介
         'desc': { type: String },
         // 职位名称
