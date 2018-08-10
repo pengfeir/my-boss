@@ -2,7 +2,7 @@
  * @Author: renpengfei 
  * @Date: 2018-07-24 10:59:15 
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-09 11:33:53
+ * @Last Modified time: 2018-08-10 14:30:26
  */
 import { login,updateInfo ,create } from '../api/login.api'
 import { getRedirectPath } from '../util/util'
@@ -23,7 +23,6 @@ export const user = (state = initState, action) => {
             return {
                 ...state,
                 msg: '',
-                isAuth: true,
                 redirectTo: getRedirectPath(action.data),
                 ...action.data
             }
@@ -36,7 +35,6 @@ export const user = (state = initState, action) => {
             return {
                 ...state,
                 msg: action.msg,
-                isAuth: false
             }
         default:
             return state
@@ -47,7 +45,6 @@ export const authSuccess = (obj) => {
     return { data: data, type: AUTH_SUCCESS }
 }
 export const update = (params) => {
-    console.log('reduxdata',params)
     return async dispatch => {
        let data = await updateInfo(params)
        if (data) {

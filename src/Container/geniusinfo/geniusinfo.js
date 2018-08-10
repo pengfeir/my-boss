@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-08-07 10:16:38
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-09 11:15:57
+ * @Last Modified time: 2018-08-10 14:28:38
  */
 import React from 'react'
 import AvatarSelector from '../../Component/avatar-selector/avatar-selector'
@@ -27,17 +27,14 @@ class BosseInfo extends React.Component {
         this.setState({ [key]: val })
     }
     handleUpdate() {
-        console.log(this.state)
         this.props.update(this.state)
     }
     render() {
-        const path = this.props.location.pathname
+        const { pathname } = this.props.location
         const redirect = this.props.redirectTo
-        console.log('path',path)
-        console.log('redirect',redirect)
         return (
             <div>
-                {redirect && redirect !== path ? <Redirect to={this.props.redirectTo}></Redirect> : null}
+                {redirect && redirect !== pathname ? <Redirect to={this.props.redirectTo}></Redirect> : null}
                 <NavBar mode='dark'>
                     NavBar
                 </NavBar>

@@ -2,7 +2,7 @@
  * @Author: renpengfei 
  * @Date: 2018-07-04 10:32:53 
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-07 11:07:58
+ * @Last Modified time: 2018-08-10 15:20:21
  */
 import axios from './config'
 
@@ -44,6 +44,13 @@ export const updateInfo = (data) => {
     return axios({
         url: '/update',
         data: data,
+        method: 'post'
+    })
+}
+export const list = (data) => {
+    return axios({
+        url: '/list',
+        params: data,
         method: 'post'
     })
 }

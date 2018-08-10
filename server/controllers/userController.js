@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-09 15:56:38
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-07 23:07:48
+ * @Last Modified time: 2018-08-10 16:59:13
  */
 const model = require('../model')
 const User = model.getModule('user')
@@ -15,12 +15,10 @@ exports.getInfo = async(ctx, next) => {
     const userid = ctx
         .cookies
         .get('userid')
-    console.log('userid', userid)
     try {
         let data = await User.findOne({
             '_id': userid
         }, _filter)
-        console.log('getInfo', data)
         if (data) {
             return ctx.body = {
                 data: data
@@ -126,11 +124,7 @@ exports.update = async(ctx, next) => {
             let findData = await User.findByIdAndUpdate(userid, body)
             if (findData) {
                 console.log('findData',findData)
-                const data = Object.assign({},{
-                    user: findData.user,
-                    type: findData.type
-                }
-                )
+                const data = { user: findData.user,type: findData.type,...ctx.request.body }
                 return ctx.body = {
                     data: data
                 }
@@ -139,5 +133,22 @@ exports.update = async(ctx, next) => {
             console.log(err)
         }
     }
+
+}
+exports.list = async(ctx, next) => {
+        const type = ctx.request.query
+        console.log('type',type)
+        // 请求体
+        try {
+            let findData = await User.find(type)
+            if (findData) {
+                const data = findData
+                return ctx.body = {
+                    data: data
+                }
+            }
+        } catch (err) {
+            console.log(err)
+        }
 
 }
