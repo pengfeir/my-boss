@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-09 15:56:38
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-10 16:59:13
+ * @Last Modified time: 2018-08-13 21:44:00
  */
 const model = require('../model')
 const User = model.getModule('user')
@@ -55,11 +55,11 @@ exports.login = async(ctx, next) => {
             user,
             pwd: md5.md5pwd(pwd)
         }, _filter)
-        console.log('data',data)
+        console.log('data', data)
         if (data) {
             ctx
                 .cookies
-                .set('userid', data.id)
+                .set('userid', data.id,{ httpOnly: false })
             return ctx.body = {
                 data: data
             }
@@ -100,7 +100,7 @@ exports.create = async(ctx, next) => {
             })
             ctx
                 .cookies
-                .set('userid', createData.id)
+                .set('userid', createData.id, { httpOnly: false })
             console.log('createData', createData)
             return ctx.body = {
                 data: createData
@@ -115,16 +115,20 @@ exports.update = async(ctx, next) => {
         .cookies
         .get('userid')
     if (!userid) {
-        // 
+        //
     } else {
         const body = ctx.request.body
-        console.log('body',ctx.request.body)
+        console.log('body', ctx.request.body)
         // 请求体
         try {
             let findData = await User.findByIdAndUpdate(userid, body)
             if (findData) {
-                console.log('findData',findData)
-                const data = { user: findData.user,type: findData.type,...ctx.request.body }
+                console.log('findData', findData)
+                const data = {
+                    user: findData.user,
+                    type: findData.type,
+                    ...ctx.request.body
+                }
                 return ctx.body = {
                     data: data
                 }
@@ -136,19 +140,19 @@ exports.update = async(ctx, next) => {
 
 }
 exports.list = async(ctx, next) => {
-        const type = ctx.request.query
-        console.log('type',type)
-        // 请求体
-        try {
-            let findData = await User.find(type)
-            if (findData) {
-                const data = findData
-                return ctx.body = {
-                    data: data
-                }
+    const type = ctx.request.query
+    console.log('type', type)
+    // 请求体
+    try {
+        let findData = await User.find(type)
+        if (findData) {
+            const data = findData
+            return ctx.body = {
+                data: data
             }
-        } catch (err) {
-            console.log(err)
         }
+    } catch (err) {
+        console.log(err)
+    }
 
 }

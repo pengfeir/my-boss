@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-08-09 14:28:02
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-10 16:55:36
+ * @Last Modified time: 2018-08-13 20:10:49
  */
 import React from 'react'
 import { Route } from 'react-router-dom'
@@ -11,6 +11,7 @@ import { NavBar } from 'antd-mobile'
 import NavLinkBar from '../navlink/navlink'
 import Boss from '../boss/boss'
 import Genius from '../genius/genius'
+import User from '../user/user'
 function Msg() {
     return <div>Msg</div>
 }
@@ -54,6 +55,7 @@ class Dashboard extends React.Component {
                 {navList.find(v => v.path === pathname).title}</NavBar>
                 <Route path='/boss' component={Boss}></Route>
                 <Route path='/genius' component={Genius}></Route>
+                <Route path='/me' component={User}></Route>
                 <NavLinkBar data={navList}></NavLinkBar>
             </div>
         )

@@ -1,20 +1,21 @@
 /*
- * @Author: renpengfei 
- * @Date: 2018-07-24 10:59:15 
+ * @Author: renpengfei
+ * @Date: 2018-07-24 10:59:15
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-10 14:30:26
+ * @Last Modified time: 2018-08-13 21:50:43
  */
-import { login,updateInfo ,create } from '../api/login.api'
+import { login, updateInfo, create } from '../api/login.api'
 import { getRedirectPath } from '../util/util'
 const AUTH_SUCCESS = 'AUTH_SUCCESS'
 const LOAD_DATA = 'LOAD_DATA'
+const LOGOUT = 'LOGOUT'
 const ERROR_MSG = 'ERROR_MSG'
 const initState = {
     redirectTo: '',
     msg: '',
     user: '',
     type: '',
-    avatar: '',
+    avatar: ''
 }
 // reducter
 export const user = (state = initState, action) => {
@@ -34,33 +35,45 @@ export const user = (state = initState, action) => {
         case ERROR_MSG:
             return {
                 ...state,
-                msg: action.msg,
+                msg: action.msg
             }
+        case LOGOUT:
+            return {
+                ...initState,
+                redirectTo: '/login'
+            }
+
         default:
             return state
     }
 }
 export const authSuccess = (obj) => {
-    const { pwd,...data } = obj
+    const {
+        pwd,
+        ...data
+    } = obj
     return { data: data, type: AUTH_SUCCESS }
+}
+export const logoutSubmit = () => {
+    return { type: LOGOUT }
 }
 export const update = (params) => {
     return async dispatch => {
-       let data = await updateInfo(params)
-       if (data) {
-        if (data.code === 0 && data.message === 'success') {
-            dispatch(authSuccess(data.data))
-        } else {
-            dispatch(errorMsg(data.message))
+        let data = await updateInfo(params)
+        if (data) {
+            if (data.code === 0 && data.message === 'success') {
+                dispatch(authSuccess(data.data))
+            } else {
+                dispatch(errorMsg(data.message))
+            }
         }
-       }
     }
 }
 export const errorMsg = (msg) => {
     return { msg, type: ERROR_MSG }
 }
 export const logoData = (userinfo) => {
-    return { type: LOAD_DATA,data: userinfo }
+    return { type: LOAD_DATA, data: userinfo }
 }
 export const logining = ({ user, pwd }) => {
     if (!user || !pwd) {
@@ -69,7 +82,7 @@ export const logining = ({ user, pwd }) => {
         return async dispatch => {
             let params = {
                 user,
-                pwd,
+                pwd
             }
             let data = await login(params)
             console.log(data)
@@ -100,7 +113,7 @@ export const register = ({ user, pwd, repeadpwd, type }) => {
             let data = await create(params)
             if (data) {
                 if (data.code === 0 && data.message === 'success') {
-                    dispatch(authSuccess({ user, pwd,type }))
+                    dispatch(authSuccess({ user, pwd, type }))
                 } else {
                     dispatch(errorMsg(data.message))
                 }
