@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-03 15:09:17
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-07 15:06:14
+ * @Last Modified time: 2018-10-18 21:10:13
  */
 import React from 'react'
 import Logo from '../../Component/logo/logo'
@@ -10,29 +10,10 @@ import { List, InputItem, WhiteSpace, Button, Radio } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { register } from '../../redux/login.redux'
-
+import { imoocForm } from '../../Component/imooc-form/immooc-form'
 @connect(state => state.user, { register })
+@imoocForm
 class Register extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            user: '',
-            pwd: '',
-            repeadpwd: '',
-            type: 0
-        }
-    }
-    handleChange = (key, val) => {
-        this.setState({
-            [key]: val
-        }, () => {
-            // this .props .register(this.state)
-        })
-
-    }
-    onChange = (value) => {
-        this.setState({ type: value })
-    };
     render() {
         const RadioItem = Radio.RadioItem
         const data = [
@@ -50,22 +31,22 @@ class Register extends React.Component {
                 <Logo></Logo>
                 <List>
                     <WhiteSpace/>
-                    <InputItem value={this.state.user} onChange={v => this.handleChange('user', v)}>用户名</InputItem>
+                    <InputItem value={this.props.state.user} onChange={v => this.props.handleChange('user', v)}>用户名</InputItem>
                     <WhiteSpace/>
                     <InputItem
-                        value={this.state.pwd}
+                        value={this.props.state.pwd}
                         type="password"
-                        onChange={v => this.handleChange('pwd', v)}>密码</InputItem>
+                        onChange={v => this.props.handleChange('pwd', v)}>密码</InputItem>
                     <WhiteSpace/>
                     <InputItem
-                        value={this.state.repeadpwd}
+                        value={this.props.state.repeadpwd}
                         type="password"
-                        onChange={v => this.handleChange('repeadpwd', v)}>确认密码</InputItem>
+                        onChange={v => this.props.handleChange('repeadpwd', v)}>确认密码</InputItem>
                     <WhiteSpace/> {data.map(i => (
                         <RadioItem
                             key={i.value}
-                            checked={this.state.type === i.value}
-                            onChange={() => this.onChange(i.value)}>
+                            checked={this.props.state.type === i.value}
+                            onChange={v => this.props.handleChange('type', i.value)}>
                             {i.label}
                         </RadioItem>
                     ))}
@@ -73,7 +54,7 @@ class Register extends React.Component {
                         type="primary"
                         onClick={v => this
                         .props
-                        .register(this.state)}>注册</Button>
+                        .register(this.props.state)}>注册</Button>
                 </List>
             </div>
         )

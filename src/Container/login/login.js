@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-03 15:09:17
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-07 16:33:36
+ * @Last Modified time: 2018-10-18 21:10:05
  */
 import React from 'react'
 import Logo from '../../Component/logo/logo'
@@ -10,23 +10,17 @@ import { Redirect } from 'react-router-dom'
 import { List, InputItem, WhiteSpace, Button, WingBlank } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { logining } from '../../redux/login.redux'
-
+import { imoocForm } from '../../Component/imooc-form/immooc-form'
 @connect(state => state.user,{ logining })
+@imoocForm
 class Login extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            user: '',
-            pwd: ''
-        }
         this.handleLogin = this.handleLogin.bind(this)
         this.register = this.register.bind(this)
     }
-    handleChange(key, val) {
-        this.setState({ [key]: val })
-    }
     handleLogin() {
-        this.props.logining(this.state)
+        this.props.logining(this.props.state)
     }
     register() {
         this
@@ -42,13 +36,13 @@ class Login extends React.Component {
                 <List>
                     <WhiteSpace/>
                     <InputItem
-                        value={this.state.user}
-                        onChange={v => this.handleChange('user', v)}>用户名</InputItem>
+                        value={this.props.state.user}
+                        onChange={v => this.props.handleChange('user', v)}>用户名</InputItem>
                     <WhiteSpace/>
                     <InputItem
-                        value={this.state.pwd}
+                        value={this.props.state.pwd}
                         type="password"
-                        onChange={v => this.handleChange('pwd', v)}>密码</InputItem>
+                        onChange={v => this.props.handleChange('pwd', v)}>密码</InputItem>
                 </List>
                 <WhiteSpace/>
                 <WingBlank>
