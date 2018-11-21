@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-08-09 14:28:02
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-10-18 19:44:46
+ * @Last Modified time: 2018-11-21 16:33:10
  */
 import React from 'react'
 import { Route } from 'react-router-dom'
@@ -12,13 +12,12 @@ import NavLinkBar from '../navlink/navlink'
 import Boss from '../boss/boss'
 import Genius from '../genius/genius'
 import User from '../user/user'
-function Msg() {
-    return <div>Msg</div>
-}
+import Chat from '../chat/chat'
 @connect(state => state, null)
 class Dashboard extends React.Component {
     render() {
         const user = this.props.user
+        console.log(this.props.location)
         const { pathname } = this.props.location
         const navList = [
             {
@@ -36,26 +35,28 @@ class Dashboard extends React.Component {
                 component: Genius,
                 hide: Number(user.type) === 0,
             }, {
-                path: '/msg',
+                path: '/chat',
                 text: '消息',
                 icon: 'msg',
                 title: '消息列表',
-                component: Msg,
+                component: Chat,
             }, {
                 path: '/me',
                 text: '我',
                 icon: 'user',
                 title: '个人中心',
-                component: Msg,
+                component: User,
             }
         ]
+        let a = navList.find(v => v.path === pathname) ? navList.find(v => v.path === pathname).title : null
         return (
             <div>
                 <NavBar mode="dark">
-                {navList.find(v => v.path === pathname).title}</NavBar>
+                {a}</NavBar>
                 <Route path='/boss' component={Boss}></Route>
                 <Route path='/genius' component={Genius}></Route>
                 <Route path='/me' component={User}></Route>
+                <Route path='/chat' component={Chat}></Route>
                 <NavLinkBar data={navList}></NavLinkBar>
             </div>
         )
