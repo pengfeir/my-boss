@@ -2,13 +2,15 @@
  * @Author: renpengfei
  * @Date: 2018-11-21 16:22:31
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-11-21 17:18:48
+ * @Last Modified time: 2018-12-06 11:17:21
  */
 import React from 'react'
 import '../../index.css'
 import { List, InputItem } from 'antd-mobile'
-import io from 'socket.io-client'
-const socket = io('ws://localhost:8888')
+import { getMsgList,sendMsg ,recvMsg } from '../../redux/chat.redux'
+import { connect } from 'react-redux'
+@connect(state => state,
+{ getMsgList ,sendMsg,recvMsg })
 class Chat extends React.Component {
     constructor(props) {
         super(props)
@@ -18,19 +20,25 @@ class Chat extends React.Component {
         }
     }
     handleSubmit() {
-        console.log(this.state)
-        socket.emit('sendmsg', { text: this.state.text })
+        const from = this.props.user._id
+        console.log('props',this.props)
+        const to = this.props.match.params.id
+        const msg = this.state.text
+        this.props.sendMsg(from,to,msg)
+        this.setState({ text: '' })
     }
     componentDidMount() {
-        socket
-            .on('recvmsg', (data) => {
-                this.setState({
-                    msg: [
-                        ...this.setState,
-                        data.text
-                    ]
-                })
-            })
+        this.props.getMsgList()
+        this.props.recvMsg()
+        // socket
+        //     .on('recvmsg', (data) => {
+        //         this.setState({
+        //             msg: [
+        //                 ...this.setState,
+        //                 data.text
+        //             ]
+        //         })
+        //     })
     }
     render() {
         return (
@@ -49,9 +57,9 @@ class Chat extends React.Component {
                             onChange={v => {
                             this.setState({ text: v })
                         }}
-                            extra={< span onClick = {
-                            () => this.handleSubmit()
-                        } > 发送 < /span>}></InputItem>
+                            extra={< span onClick = {() => this.handleSubmit()} > 发送 </span>}
+                        >
+                        </InputItem>
                     </List>
                 </div>
             </div>

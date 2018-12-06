@@ -2,10 +2,11 @@
  * @Author: renpengfei
  * @Date: 2018-07-09 15:56:38
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-13 21:44:00
+ * @Last Modified time: 2018-12-06 11:25:24
  */
 const model = require('../model')
 const User = model.getModule('user')
+const Chat = model.getModule('chat')
 const md5 = require('../util/md5')
 const _filter = {
     'pwd': 0,
@@ -145,6 +146,20 @@ exports.list = async(ctx, next) => {
     // 请求体
     try {
         let findData = await User.find(type)
+        if (findData) {
+            const data = findData
+            return ctx.body = {
+                data: data
+            }
+        }
+    } catch (err) {
+        console.log(err)
+    }
+
+}
+exports.getMsgList = async(ctx, next) => {
+    try {
+        let findData = await Chat.find({})
         if (findData) {
             const data = findData
             return ctx.body = {

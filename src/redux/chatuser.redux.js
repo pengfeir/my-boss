@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-08-10 14:58:51
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-10 16:02:29
+ * @Last Modified time: 2018-12-05 21:07:29
  */
 import { list } from '../api/login.api'
 
@@ -26,7 +26,6 @@ const userList = (data) => {
     return { type: USER_LIST, payload: data }
 }
 export const getUserList = (type) => {
-    
     return async dispatch => {
         let params = {
             type

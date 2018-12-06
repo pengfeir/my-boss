@@ -1,35 +1,73 @@
 /*
- * @Author: renpengfei 
- * @Date: 2018-06-21 17:46:09 
+ * @Author: renpengfei
+ * @Date: 2018-06-21 17:46:09
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-09 11:30:07
+ * @Last Modified time: 2018-12-05 11:35:18
  */
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost:27017/imooc-chat') //连接本地数据库
 
 const models = {
     user: {
-        'user': { type: String,require: true },
-        'pwd': { type: String,require: true },
-        'type': { type: String,require: true },
+        'user': {
+            'type': String,
+            require: true
+        },
+        'pwd': {
+            'type': String,
+            require: true
+        },
+        'type': {
+            'type': String,
+            require: true
+        },
         // 头像
-        'avatar': { type: String },
+        'avatar': {
+            'type': String
+        },
         // 个人简介或职位简介
-        'desc': { type: String },
+        'desc': {
+            'type': String
+        },
         // 职位名称
-        'title': { type: String },
-        'company': { type: String },
-        'money': { type: String },
+        'title': {
+            'type': String
+        },
+        'company': {
+            'type': String
+        },
+        'money': {
+            'type': String
+        }
     },
     chat: {
-
+        'chatid': {
+            'type': String
+        },
+        'from': {
+            'type': String,
+            'require': true
+        },
+        'to': {
+            'type': String,
+            'require': true
+        },
+        'content': {
+            'type': String,
+            'require': true,
+            'default': ''
+        },
+        'create_time': {
+            'type': Number,
+            'default': new Date().getTime()
+        },
     }
 }
 for (let m in models) {
-    mongoose.model(m,new mongoose.Schema(models[m]))
+    mongoose.model(m, new mongoose.Schema(models[m]))
 }
 module.exports = {
-    getModule: function(name) {
+    getModule: function (name) {
         return mongoose.model(name)
     }
 }

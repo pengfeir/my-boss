@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-08-09 14:28:02
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-11-21 16:33:10
+ * @Last Modified time: 2018-12-06 11:18:17
  */
 import React from 'react'
 import { Route } from 'react-router-dom'
@@ -56,7 +56,7 @@ class Dashboard extends React.Component {
                 <Route path='/boss' component={Boss}></Route>
                 <Route path='/genius' component={Genius}></Route>
                 <Route path='/me' component={User}></Route>
-                <Route path='/chat' component={Chat}></Route>
+                <Route path='/chat/:id' component={Chat}></Route>
                 <NavLinkBar data={navList}></NavLinkBar>
             </div>
         )
