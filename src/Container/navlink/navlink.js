@@ -2,13 +2,15 @@
  * @Author: renpengfei
  * @Date: 2018-08-09 17:05:47
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-10 14:24:08
+ * @Last Modified time: 2018-12-09 20:43:38
  */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { TabBar } from 'antd-mobile'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 @withRouter
+@connect(state => state.chat)
 class NavLinkBar extends React.Component {
     static proTypes = {
         data: PropTypes.bool.isRequired
@@ -27,6 +29,9 @@ class NavLinkBar extends React.Component {
                 <TabBar>
                     {navList.map(v => (
                         <TabBar.Item
+                            badge={v.path === '/chat'
+                            ? this.props.unread
+                            : ''}
                             key={v.path}
                             title={v.title}
                             icon={{
@@ -37,9 +42,11 @@ class NavLinkBar extends React.Component {
                         }}
                             selected={pathname === v.path}
                             onPress={() => {
-                                this.props.history.push(v.path)
-                            }}
-                            ></TabBar.Item>
+                            this
+                                .props
+                                .history
+                                .push(v.path)
+                        }}></TabBar.Item>
                     ))
 }
                 </TabBar>

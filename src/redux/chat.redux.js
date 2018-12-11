@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-12-05 11:41:10
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-06 11:23:03
+ * @Last Modified time: 2018-12-11 15:52:48
  */
 import io from 'socket.io-client'
 import { msgList } from '../api/login.api'
@@ -13,6 +13,7 @@ const MSG_RECV = 'MSG_RECV'
 // 标记已读 const MSG_READ = 'MSG_READ'
 const initState = {
     chatmsg: [],
+    users: {},
     unread: 0
 }
 export const chat = (state = initState, action) => {
@@ -20,41 +21,65 @@ export const chat = (state = initState, action) => {
         case MSG_LIST:
             return {
                 ...state,
-                chatmsg: action.payload,
+                users: action.payload.users,
+                chatmsg: action.payload.msg,
                 unread: action
                     .payload
-                    .filter(v => !v.read)
+                    .msg
+                    .filter(v => (!v.read) && (v.from = action.payload.userid))
                     .length
+            }
+        case MSG_RECV:
+        const n = action.payload.to === action.userid ? 1 : 0
+            return {
+                ...state,
+                chatmsg: [
+                    ...state.chatmsg,
+                    action.payload
+                ],
+                unread: n + 1
             }
         default:
             return state
     }
 }
-const list = (msg) => {
-    return { type: MSG_LIST, payload: msg }
+const messagelist = (msg, users, userid) => {
+    return {
+        type: MSG_LIST,
+        payload: {
+            msg,
+            users,
+            userid
+        }
+    }
 }
-const msgRecv = (msg) => {
-    return { type: MSG_RECV, payload: msg }
+const msgRecv = (msg,userid) => {
+    return { userid,type: MSG_RECV, payload: msg }
 }
 export const getMsgList = () => {
-    return async dispatch => {
+    return async(dispatch, getState) => {
         let data = await msgList()
         if (data.code === 0 && data.message === 'success') {
-            dispatch(list(data.data))
+            console.log('getState', getState())
+            const userid = getState().user._id
+            console.log('userid',userid)
+            dispatch(messagelist(data.data.msg, data.data.users, userid))
         }
     }
 }
 export const sendMsg = (from, to, msg) => {
-    console.log('chat', from, to, msg)
     return async dispatch => {
+        console.log(222)
         socket.emit('sendmsg', { from, to, msg })
     }
 }
 export const recvMsg = () => {
-    return dispatch => {
+    return (dispatch,getState) => {
         socket.on('recvmsg', (data) => {
-            console.log('recvMsg', data)
-            dispatch(msgRecv(data))
+            console.log('getState',getState())
+            const userid = getState().user._id
+            console.log('recvmsg',userid)
+            dispatch(msgRecv(data,userid))
         })
     }
 }

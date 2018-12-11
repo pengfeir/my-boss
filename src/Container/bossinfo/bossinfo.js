@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-08-07 10:16:38
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-10 14:27:54
+ * @Last Modified time: 2018-12-09 20:45:45
  */
 import React from 'react'
 import AvatarSelector from '../../Component/avatar-selector/avatar-selector'
@@ -29,7 +29,6 @@ class BosseInfo extends React.Component {
         this.setState({ [key]: val })
     }
     handleUpdate() {
-        console.log(this.state)
         this.props.update(this.state)
     }
     render() {

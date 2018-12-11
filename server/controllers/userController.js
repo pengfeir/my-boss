@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-09 15:56:38
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-06 11:25:24
+ * @Last Modified time: 2018-12-09 21:28:59
  */
 const model = require('../model')
 const User = model.getModule('user')
@@ -60,7 +60,7 @@ exports.login = async(ctx, next) => {
         if (data) {
             ctx
                 .cookies
-                .set('userid', data.id,{ httpOnly: false })
+                .set('userid', data.id, { httpOnly: false })
             return ctx.body = {
                 data: data
             }
@@ -159,15 +159,36 @@ exports.list = async(ctx, next) => {
 }
 exports.getMsgList = async(ctx, next) => {
     try {
-        let findData = await Chat.find({})
-        if (findData) {
-            const data = findData
-            return ctx.body = {
-                data: data
+        var data = {}
+        const userid = ctx
+            .cookies
+            .get('userid')
+        let users = {}
+        let userData = await User.find({})
+        userData.forEach(v => {
+            users[v._id] = {
+                name: v.user,
+                avatar: v.avatar
             }
+        })
+        let msg = await Chat.find({
+            '$or': [
+                {
+                    from: userid
+                }, {
+                    to: userid
+                }
+            ]
+        })
+        data = {
+            msg,
+            users
         }
-    } catch (err) {
-        console.log(err)
-    }
+        return ctx.body = {
+            data: data
+        }
+} catch (err) {
+    console.log(err)
+}
 
 }

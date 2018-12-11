@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-03 15:09:17
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-11-13 21:50:22
+ * @Last Modified time: 2018-12-09 20:45:31
  */
 import React from 'react'
 import Logo from '../../Component/logo/logo'
@@ -23,7 +23,6 @@ class Login extends React.Component {
         this.props.logining(this.props.state)
     }
     register() {
-        console.log(222)
         this
             .props
             .history

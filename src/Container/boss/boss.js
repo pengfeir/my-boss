@@ -2,7 +2,7 @@
  * @Author: renpengfei 
  * @Date: 2018-08-10 14:54:55 
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-05 11:40:10
+ * @Last Modified time: 2018-12-09 20:45:31
  */
 import React from 'react'
 import { connect } from 'react-redux'
@@ -14,7 +14,6 @@ class Boss extends React.Component {
         this.props.getUserList('1')
     }
     render() {
-        console.log(999999,this.props)
         return <UserCard userList={this.props.userList}></UserCard>
     }
 }

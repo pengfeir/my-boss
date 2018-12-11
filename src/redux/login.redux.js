@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-24 10:59:15
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-13 21:50:43
+ * @Last Modified time: 2018-12-09 20:45:39
  */
 import { login, updateInfo, create } from '../api/login.api'
 import { getRedirectPath } from '../util/util'
@@ -85,10 +85,8 @@ export const logining = ({ user, pwd }) => {
                 pwd
             }
             let data = await login(params)
-            console.log(data)
             if (data) {
                 if (data.code === 0 && data.message === 'success') {
-                    console.log(888888)
                     dispatch(authSuccess(data.data))
                 } else {
                     dispatch(errorMsg(data.message))

@@ -2,15 +2,15 @@
  * @Author: renpengfei
  * @Date: 2018-11-21 16:22:31
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-06 11:17:21
+ * @Last Modified time: 2018-12-11 16:54:17
  */
 import React from 'react'
 import '../../index.css'
-import { List, InputItem } from 'antd-mobile'
-import { getMsgList,sendMsg ,recvMsg } from '../../redux/chat.redux'
+import { List, InputItem, NavBar,Icon } from 'antd-mobile'
+import { sendMsg ,getMsgList,recvMsg } from '../../redux/chat.redux'
 import { connect } from 'react-redux'
-@connect(state => state,
-{ getMsgList ,sendMsg,recvMsg })
+import { getChatId } from '../../util/util'
+@connect(state => state, { sendMsg ,getMsgList,recvMsg })
 class Chat extends React.Component {
     constructor(props) {
         super(props)
@@ -21,33 +21,66 @@ class Chat extends React.Component {
     }
     handleSubmit() {
         const from = this.props.user._id
-        console.log('props',this.props)
         const to = this.props.match.params.id
         const msg = this.state.text
-        this.props.sendMsg(from,to,msg)
+        this
+            .props
+            .sendMsg(from, to, msg)
         this.setState({ text: '' })
     }
-    componentDidMount() {
-        this.props.getMsgList()
-        this.props.recvMsg()
-        // socket
-        //     .on('recvmsg', (data) => {
-        //         this.setState({
-        //             msg: [
-        //                 ...this.setState,
-        //                 data.text
-        //             ]
-        //         })
-        //     })
+    componentWillMount() {
+        if (!this.props.chat.chatmsg.length) {
+            console.log('chat')
+            this
+            .props
+            .getMsgList()
+        this
+            .props
+            .recvMsg()
+        }
+        
     }
     render() {
+        const userid = this.props.match.params.id
+        const Item = List.Item
+        const users = this.props.chat.users
+        if (!users[userid]) {
+            return null
+        }
+        const chatid = getChatId(userid,this.props.user._id)
+        const chatmsg = this.props.chat.chatmsg.filter(v => v.chatid === chatid)
+        console.log(userid,chatmsg,chatid)
         return (
-            <div>
-                {this.state.msg.map((v,index) => {
-                    return (
-                        <p key={index}>{v}</p>   
-                    )
-                })}
+            <div id='chat-page'>
+                <NavBar 
+                mode='dark'
+                icon={<Icon type="left" />}
+                onLeftClick={() => this.props.history.goBack()}
+                >
+                 {users[userid].name}
+                </NavBar>
+
+                {chatmsg
+                    .map((v, index) => {
+                        const avatar = require(`../../Component/img/${users[v.from].avatar}.png`)
+                        return (v.from === userid
+                            ? (
+                                <List key={v._id}>
+                                    <Item 
+                                     thumb = {avatar}
+                                    >
+                                        {v.content}
+                                    </Item>
+                                </List>
+                            )
+                            : (
+                                <List key={v._id}>
+                                    <Item className='chat-me' extra ={<img src={avatar}/>}>
+                                        {v.content}
+                                    </Item>
+                                </List>
+                            ))
+                    })}
                 <p></p>
                 <div className="stick-footer">
                     <List>
@@ -57,15 +90,15 @@ class Chat extends React.Component {
                             onChange={v => {
                             this.setState({ text: v })
                         }}
-                            extra={< span onClick = {() => this.handleSubmit()} > 发送 </span>}
-                        >
+                            extra={
+                            <span onClick = {() => this.handleSubmit()} >发送
+                            </span>}
+                            >
                         </InputItem>
                     </List>
                 </div>
             </div>
-
         )
-
     }
 }
 export default Chat

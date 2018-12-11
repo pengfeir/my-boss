@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-08-09 14:28:02
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-06 11:18:17
+ * @Last Modified time: 2018-12-11 17:05:53
  */
 import React from 'react'
 import { Route } from 'react-router-dom'
@@ -13,11 +13,26 @@ import Boss from '../boss/boss'
 import Genius from '../genius/genius'
 import User from '../user/user'
 import Chat from '../chat/chat'
-@connect(state => state, null)
+import { getMsgList, recvMsg } from '../../redux/chat.redux'
+
+@connect(state => state, { getMsgList, recvMsg })
+
+
 class Dashboard extends React.Component {
+    componentWillMount() {
+        if (!this.props.chat.chatmsg.length) {
+        //     console.log('Dashboard')
+        //     this
+        //     .props
+        //     .getMsgList()
+        // this
+        //     .props
+        //     .recvMsg()
+        }
+        
+    }
     render() {
         const user = this.props.user
-        console.log(this.props.location)
         const { pathname } = this.props.location
         const navList = [
             {
