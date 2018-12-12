@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-09 15:56:38
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-09 21:28:59
+ * @Last Modified time: 2018-12-12 16:21:55
  */
 const model = require('../model')
 const User = model.getModule('user')

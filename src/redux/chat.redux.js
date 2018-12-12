@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-12-05 11:41:10
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-11 15:52:48
+ * @Last Modified time: 2018-12-12 16:22:29
  */
 import io from 'socket.io-client'
 import { msgList } from '../api/login.api'
@@ -26,7 +26,7 @@ export const chat = (state = initState, action) => {
                 unread: action
                     .payload
                     .msg
-                    .filter(v => (!v.read) && (v.from = action.payload.userid))
+                    .filter(v => (!v.read) && (v.to === action.payload.userid))
                     .length
             }
         case MSG_RECV:
@@ -37,13 +37,13 @@ export const chat = (state = initState, action) => {
                     ...state.chatmsg,
                     action.payload
                 ],
-                unread: n + 1
+                unread: n + state.unread
             }
         default:
             return state
     }
 }
-const messagelist = (msg, users, userid) => {
+const messageList = (msg, users, userid) => {
     return {
         type: MSG_LIST,
         payload: {
@@ -60,25 +60,20 @@ export const getMsgList = () => {
     return async(dispatch, getState) => {
         let data = await msgList()
         if (data.code === 0 && data.message === 'success') {
-            console.log('getState', getState())
             const userid = getState().user._id
-            console.log('userid',userid)
-            dispatch(messagelist(data.data.msg, data.data.users, userid))
+            dispatch(messageList((data.data.msg), data.data.users, userid))
         }
     }
 }
 export const sendMsg = (from, to, msg) => {
     return async dispatch => {
-        console.log(222)
         socket.emit('sendmsg', { from, to, msg })
     }
 }
 export const recvMsg = () => {
     return (dispatch,getState) => {
         socket.on('recvmsg', (data) => {
-            console.log('getState',getState())
             const userid = getState().user._id
-            console.log('recvmsg',userid)
             dispatch(msgRecv(data,userid))
         })
     }

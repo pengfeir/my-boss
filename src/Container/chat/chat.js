@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-11-21 16:22:31
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-11 16:54:17
+ * @Last Modified time: 2018-12-12 16:21:30
  */
 import React from 'react'
 import '../../index.css'
@@ -30,7 +30,6 @@ class Chat extends React.Component {
     }
     componentWillMount() {
         if (!this.props.chat.chatmsg.length) {
-            console.log('chat')
             this
             .props
             .getMsgList()
@@ -49,7 +48,6 @@ class Chat extends React.Component {
         }
         const chatid = getChatId(userid,this.props.user._id)
         const chatmsg = this.props.chat.chatmsg.filter(v => v.chatid === chatid)
-        console.log(userid,chatmsg,chatid)
         return (
             <div id='chat-page'>
                 <NavBar 

@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-02 16:51:22
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-08-09 18:05:01
+ * @Last Modified time: 2018-12-12 14:05:09
  */
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -22,6 +22,7 @@ import AuthRoute from './Component/authroute/authroute'
 import BossInfo from './Container/bossinfo/bossinfo'
 import GeniusInfo from './Container/geniusinfo/geniusinfo'
 import Dashboard from './Container/dashboard/dashboard'
+import Chat from '../src/Container/chat/chat'
 
 const store = createStore(reducers, compose(applyMiddleware(thunk), window.devToolsExtension
     ? window.devToolsExtension()
@@ -39,6 +40,7 @@ ReactDOM.render((
                     <Route path='/register' component={Register}></Route>
                     <Route path='/boss' component={Dashboard}></Route>
                     <Route path='/genius' component={Dashboard}></Route>
+                    <Route path='/chat/:id' component={Chat}></Route>
                     <Route component={Dashboard}></Route>
                 </Switch>
             </div>

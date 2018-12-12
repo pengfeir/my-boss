@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-08-09 14:28:02
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-11 17:05:53
+ * @Last Modified time: 2018-12-12 16:22:07
  */
 import React from 'react'
 import { Route } from 'react-router-dom'
@@ -21,13 +21,12 @@ import { getMsgList, recvMsg } from '../../redux/chat.redux'
 class Dashboard extends React.Component {
     componentWillMount() {
         if (!this.props.chat.chatmsg.length) {
-        //     console.log('Dashboard')
-        //     this
-        //     .props
-        //     .getMsgList()
-        // this
-        //     .props
-        //     .recvMsg()
+            this
+            .props
+            .getMsgList()
+        this
+            .props
+            .recvMsg()
         }
         
     }
@@ -71,7 +70,7 @@ class Dashboard extends React.Component {
                 <Route path='/boss' component={Boss}></Route>
                 <Route path='/genius' component={Genius}></Route>
                 <Route path='/me' component={User}></Route>
-                <Route path='/chat/:id' component={Chat}></Route>
+                {/* <Route path='/chat/:id' component={Chat}></Route> */}
                 <NavLinkBar data={navList}></NavLinkBar>
             </div>
         )
