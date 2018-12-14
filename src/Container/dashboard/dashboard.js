@@ -2,10 +2,10 @@
  * @Author: renpengfei
  * @Date: 2018-08-09 14:28:02
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-12 16:22:07
+ * @Last Modified time: 2018-12-14 15:33:23
  */
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { NavBar } from 'antd-mobile'
 import NavLinkBar from '../navlink/navlink'
@@ -17,18 +17,17 @@ import { getMsgList, recvMsg } from '../../redux/chat.redux'
 
 @connect(state => state, { getMsgList, recvMsg })
 
-
 class Dashboard extends React.Component {
     componentWillMount() {
         if (!this.props.chat.chatmsg.length) {
             this
-            .props
-            .getMsgList()
-        this
-            .props
-            .recvMsg()
+                .props
+                .getMsgList()
+            this
+                .props
+                .recvMsg()
         }
-        
+
     }
     render() {
         const user = this.props.user
@@ -40,37 +39,42 @@ class Dashboard extends React.Component {
                 icon: 'boss',
                 title: '牛人列表',
                 component: Boss,
-                hide: Number(user.type) === 1,
+                hide: Number(user.type) === 1
             }, {
                 path: '/genius',
                 text: 'boss',
                 icon: 'job',
                 title: 'BOSS列表',
                 component: Genius,
-                hide: Number(user.type) === 0,
+                hide: Number(user.type) === 0
             }, {
-                path: '/chat',
+                path: '/msg',
                 text: '消息',
                 icon: 'msg',
                 title: '消息列表',
-                component: Chat,
+                component: Chat
             }, {
                 path: '/me',
                 text: '我',
                 icon: 'user',
                 title: '个人中心',
-                component: User,
+                component: User
             }
         ]
-        let a = navList.find(v => v.path === pathname) ? navList.find(v => v.path === pathname).title : null
+        let a = navList.find(v => v.path === pathname)
+            ? navList
+                .find(v => v.path === pathname)
+                .title
+            : null
         return (
             <div>
                 <NavBar mode="dark">
-                {a}</NavBar>
-                <Route path='/boss' component={Boss}></Route>
-                <Route path='/genius' component={Genius}></Route>
-                <Route path='/me' component={User}></Route>
-                {/* <Route path='/chat/:id' component={Chat}></Route> */}
+                    {a}</NavBar>
+                <Switch>
+                    {navList.map(v => (
+                        <Route key={v.path} path={v.path} component={v.component}></Route>
+                    ))}
+                </Switch>
                 <NavLinkBar data={navList}></NavLinkBar>
             </div>
         )

@@ -2,11 +2,11 @@
  * @Author: renpengfei
  * @Date: 2018-12-05 11:41:10
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-12 16:22:29
+ * @Last Modified time: 2018-12-13 18:34:30
  */
 import io from 'socket.io-client'
 import { msgList } from '../api/login.api'
-const socket = io('ws://localhost:8888')
+const socket = io('ws://192.168.248.211:8888')
 const MSG_LIST = 'MSG_LIST'
 // 读取信息
 const MSG_RECV = 'MSG_RECV'
@@ -67,6 +67,8 @@ export const getMsgList = () => {
 }
 export const sendMsg = (from, to, msg) => {
     return async dispatch => {
+        console.log(8888)
+        console.log('socket',socket)
         socket.emit('sendmsg', { from, to, msg })
     }
 }
@@ -74,6 +76,7 @@ export const recvMsg = () => {
     return (dispatch,getState) => {
         socket.on('recvmsg', (data) => {
             const userid = getState().user._id
+            console.log('recvmsg')
             dispatch(msgRecv(data,userid))
         })
     }

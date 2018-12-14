@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-06-21 17:19:39
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-09 20:46:04
+ * @Last Modified time: 2018-12-13 18:31:42
  */
 
 const Koa = require('koa')
@@ -11,9 +11,12 @@ const server = require('http').createServer(app.callback())
 const io = require('socket.io')(server)
 const model = require('./model')
 const Chat = model.getModule('chat')
+console.log(200000000)
 io.on('connection', (socket) => {
+    console.log(99999)
     socket
         .on('sendmsg', function (data) {
+            console.log('sendmsg')
             const { from, to, msg } = data
             const chatid = [from, to]
                 .sort()
@@ -27,6 +30,7 @@ io.on('connection', (socket) => {
                 io.emit('recvmsg', Object.assign({}, doc._doc))
             })
         })
+        console.log(22222)
     console.log('hello socket')
 })
 const bodyParse = require('koa-bodyparser')
