@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-09 15:56:38
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-12 16:21:55
+ * @Last Modified time: 2018-12-15 21:06:35
  */
 const model = require('../model')
 const User = model.getModule('user')
@@ -140,9 +140,31 @@ exports.update = async(ctx, next) => {
     }
 
 }
+exports.readMsg = async(ctx, next) => {
+    const userid = ctx
+        .cookies
+        .get('userid')
+        const { from } = ctx.request.body
+        try {
+            let findData = await Chat.update(
+                { from, to: userid },
+                { '$set': { read: true } },
+                { 'multi': true }
+            )
+            if (findData) {
+                const data = {
+                    num: findData.nModified,
+                }
+                return ctx.body = {
+                    data: data
+                }
+            }
+        } catch (err) {
+            console.log(err)
+        }
+}
 exports.list = async(ctx, next) => {
     const type = ctx.request.query
-    console.log('type', type)
     // 请求体
     try {
         let findData = await User.find(type)

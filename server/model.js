@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-06-21 17:46:09
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-05 11:35:18
+ * @Last Modified time: 2018-12-15 21:08:31
  */
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost:27017/imooc-chat') //连接本地数据库
@@ -51,6 +51,11 @@ const models = {
         'to': {
             'type': String,
             'require': true
+        },
+        'read': {
+            'type': Boolean,
+            'require': true,
+            'default': false
         },
         'content': {
             'type': String,

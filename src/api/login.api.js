@@ -2,7 +2,7 @@
  * @Author: renpengfei 
  * @Date: 2018-07-04 10:32:53 
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-05 21:00:09
+ * @Last Modified time: 2018-12-15 21:05:53
  */
 import axios from './config'
 
@@ -50,14 +50,21 @@ export const updateInfo = (data) => {
 export const list = (data) => {
     return axios({
         url: '/list',
-        params: data,
+        data: data,
         method: 'post'
     })
 }
 export const msgList = (data) => {
     return axios({
         url: '/getMsgList',
-        params: data,
+        data: data,
+        method: 'post'
+    })
+}
+export const readmsgList = (data) => {
+    return axios({
+        url: '/readMsg',
+        data: data,
         method: 'post'
     })
 }

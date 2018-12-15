@@ -2,21 +2,20 @@
  * @Author: renpengfei
  * @Date: 2018-11-21 16:22:31
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-13 17:09:57
+ * @Last Modified time: 2018-12-15 21:34:37
  */
 import React from 'react'
 import '../../index.css'
 import { List, InputItem, NavBar, Icon, Grid } from 'antd-mobile'
-import { sendMsg, getMsgList, recvMsg } from '../../redux/chat.redux'
+import { sendMsg, getMsgList, recvMsg ,readMsg } from '../../redux/chat.redux'
 import { connect } from 'react-redux'
 import { getChatId } from '../../util/util'
-@connect(state => state, { sendMsg, getMsgList, recvMsg })
+@connect(state => state, { sendMsg, getMsgList, recvMsg ,readMsg })
 class Chat extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             text: '',
-            // msg: [],
             showEmoji: false
         }
     }
@@ -24,7 +23,6 @@ class Chat extends React.Component {
         const from = this.props.user._id
         const to = this.props.match.params.id
         const msg = this.state.text
-        console.log('fasongchenggong')
         this
             .props
             .sendMsg(from, to, msg)
@@ -43,8 +41,13 @@ class Chat extends React.Component {
             this
                 .props
                 .recvMsg()
+                
         }
-
+    }
+    componentWillUnmount() {
+        console.log(222222)
+        const to = this.props.match.params.id
+        this.props.readMsg(to)
     }
     render() {
         const emoji = ("🤣 😃 😄 😅 😆 😉 😊 😋 😎 😍 😘 🥰 😗 😙 😚 🙂 🤗 🤩 🤔 🤨 😐 😑 😶 🙄 😏 😣 " +
