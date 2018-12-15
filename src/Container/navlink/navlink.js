@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-08-09 17:05:47
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-09 20:43:38
+ * @Last Modified time: 2018-12-15 11:49:00
  */
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -29,7 +29,7 @@ class NavLinkBar extends React.Component {
                 <TabBar>
                     {navList.map(v => (
                         <TabBar.Item
-                            badge={v.path === '/chat'
+                            badge={v.path === '/msg'
                             ? this.props.unread
                             : ''}
                             key={v.path}

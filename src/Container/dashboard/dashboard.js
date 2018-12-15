@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-08-09 14:28:02
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-14 15:33:23
+ * @Last Modified time: 2018-12-15 10:43:25
  */
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
@@ -12,7 +12,7 @@ import NavLinkBar from '../navlink/navlink'
 import Boss from '../boss/boss'
 import Genius from '../genius/genius'
 import User from '../user/user'
-import Chat from '../chat/chat'
+import Msg from '../msg/msg'
 import { getMsgList, recvMsg } from '../../redux/chat.redux'
 
 @connect(state => state, { getMsgList, recvMsg })
@@ -52,7 +52,7 @@ class Dashboard extends React.Component {
                 text: '消息',
                 icon: 'msg',
                 title: '消息列表',
-                component: Chat
+                component: Msg
             }, {
                 path: '/me',
                 text: '我',

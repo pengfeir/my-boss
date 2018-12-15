@@ -2,7 +2,7 @@
  * @Author: renpengfei
  * @Date: 2018-07-02 16:51:22
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-13 17:07:05
+ * @Last Modified time: 2018-12-15 11:39:36
  */
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -25,7 +25,7 @@ import GeniusInfo from './Container/geniusinfo/geniusinfo'
 import Dashboard from './Container/dashboard/dashboard'
 import Chat from '../src/Container/chat/chat'
 
-new vConsole()
+// new vConsole()
 console.log(vConsole)
 const store = createStore(reducers, compose(applyMiddleware(thunk), window.devToolsExtension
     ? window.devToolsExtension()

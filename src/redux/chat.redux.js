@@ -2,11 +2,11 @@
  * @Author: renpengfei
  * @Date: 2018-12-05 11:41:10
  * @Last Modified by: renpengfei
- * @Last Modified time: 2018-12-13 18:34:30
+ * @Last Modified time: 2018-12-15 11:35:37
  */
 import io from 'socket.io-client'
 import { msgList } from '../api/login.api'
-const socket = io('ws://192.168.248.211:8888')
+const socket = io('ws://localhost:8888')
 const MSG_LIST = 'MSG_LIST'
 // 读取信息
 const MSG_RECV = 'MSG_RECV'
